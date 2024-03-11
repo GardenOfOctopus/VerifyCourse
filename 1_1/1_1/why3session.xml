@@ -3,30 +3,32 @@
 "https://www.why3.org/why3session.dtd">
 <why3session shape_version="6">
 <prover id="0" name="CVC4" version="1.8" timelimit="5" steplimit="0" memlimit="1000"/>
-<prover id="1" name="Alt-Ergo" version="2.5.2" timelimit="5" steplimit="0" memlimit="1000"/>
 <file format="whyml">
 <path name=".."/><path name="1_1.why"/>
 <theory name="Task1_1">
  <goal name="P1T1_total" proved="true">
- <proof prover="0"><result status="valid" time="0.020972" steps="817"/></proof>
- <proof prover="1" obsolete="true"><result status="unknown" time="0.017800" steps="85"/></proof>
+ <proof prover="0"><result status="valid" time="0.027105" steps="817"/></proof>
  </goal>
  <goal name="P1T1_part" proved="true">
- <proof prover="0"><result status="valid" time="0.015903" steps="348"/></proof>
+ <proof prover="0"><result status="valid" time="0.023142" steps="348"/></proof>
  </goal>
  <goal name="P1T2_total">
- <proof prover="0"><result status="unknown" time="0.017221" steps="781"/></proof>
+ <proof prover="0"><result status="unknown" time="0.030813" steps="781"/></proof>
  </goal>
  <goal name="P1T2_part" proved="true">
- <proof prover="0"><result status="valid" time="0.016178" steps="341"/></proof>
+ <proof prover="0"><result status="valid" time="0.020711" steps="341"/></proof>
  </goal>
- <goal name="P2T1_total">
+ <goal name="P2T1_total" proved="true">
+ <proof prover="0"><result status="valid" time="0.043935" steps="2460"/></proof>
  </goal>
- <goal name="P2T1_part">
+ <goal name="P2T1_part" proved="true">
+ <proof prover="0"><result status="valid" time="0.030570" steps="1163"/></proof>
  </goal>
- <goal name="P2T2_total">
+ <goal name="P2T2_total" proved="true">
+ <proof prover="0"><result status="valid" time="0.043590" steps="2672"/></proof>
  </goal>
- <goal name="P2T2_part">
+ <goal name="P2T2_part" proved="true">
+ <proof prover="0"><result status="valid" time="0.026030" steps="1156"/></proof>
  </goal>
 </theory>
 </file>

@@ -45,9 +45,43 @@ theory Task1_1
     forall x1: int, x2: int, x3: int.
     (phi2 x1 x2 x3) &&  (mp1_not_omega x1 x2 x3)  -> (psi x1 x2 x3 (mp1 x1 x2 x3))
     
-  function mp2(x1 : int) (x2 : int) (x3 : int) : int = 1
+  function mp2(x1 : int) (x2 : int) (x3 : int) : int = x1 + x2 - x3
+  
+  predicate b1_1 (x1 : int) (x2 : int) (x3 : int) = 
+    x1 > 0 && x2 > 0 && (not sub_crashes 2147483647 x1) && (2147483647 - x1) >= x2
+    
+  predicate b1_2 (x1 : int) (x2 : int) (x3 : int) = 
+    x1 < 0 && x2 < 0 && (not sub_crashes x1 (-2147483648)) && (x1 - (-2147483648)) >= x2
+    
+  predicate b1_3 (x1 : int) (x2 : int) (x3 : int) = 
+    (x1 <= 0 && x2 >= 0) || (x1 >= 0 && x2 <= 0)
+    
+  predicate b2_1 (x1 : int) (x2 : int) (x3 : int) = 
+    x1 > 0 && x3 < 0 && (not sub_crashes x1 2147483647) && (x1 - 2147483647) <= x3
+    
+  predicate b2_2 (x1 : int) (x2 : int) (x3 : int) = 
+    x1 < 0 && x3 > 0 && (not add_crashes (-2147483648) x3) && ((-2147483648) + x3) <= x1
+    
+  predicate b2_3 (x1 : int) (x2 : int) (x3 : int) = 
+    (x1 <= 0 && x3 <= 0) || (x1 >= 0 && x3 >= 0)
+  
+  predicate b1 (x1 : int) (x2 : int) (x3 : int) = 
+    (b1_1 x1 x2 x3 || b1_2 x1 x2 x3 || b1_3 x1 x2 x3)
+  
+  predicate b2 (x1 : int) (x2 : int) (x3 : int) = 
+    (b2_1 x1 x2 x3 || b2_2 x1 x2 x3 || b2_3 x1 x2 x3)
+  
+  predicate x1x2 (x1 : int) (x2 : int) (x3 : int) = 
+    not add_crashes x1 x2 && not sub_crashes (x1 + x2) x3
+  
+  predicate x1x3 (x1 : int) (x2 : int) (x3 : int) =
+    not sub_crashes x1 x3 && not add_crashes (x1 - x3) x2
+  
+  predicate x2x3 (x1 : int) (x2 : int) (x3 : int) =
+    not sub_crashes x2 x3 && not add_crashes (x2 - x3) x1
 											                                          
-  predicate mp2_not_omega (x1 : int) (x2 : int) (x3 : int) = true
+  predicate mp2_not_omega (x1 : int) (x2 : int) (x3 : int) = 
+     (b1 x1 x2 x3) && (x1x2 x1 x2 x3) || (b2 x1 x2 x3) && (x1x3 x1 x2 x3) || (x2x3 x1 x2 x3)
                         
   goal P2T1_total:
     forall x1: int, x2: int, x3: int.
@@ -64,4 +98,5 @@ theory Task1_1
   goal P2T2_part:
     forall x1: int, x2: int, x3: int.
     (phi2 x1 x2 x3) &&  (mp2_not_omega x1 x2 x3)  -> (psi x1 x2 x3 (mp2 x1 x2 x3))
+     
 end
