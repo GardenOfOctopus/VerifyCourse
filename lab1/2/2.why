@@ -1,0 +1,18 @@
+theory Task2
+    use import int.Int
+
+    predicate p_a (x: int) (y1: int) (y2: int) (y3: int) = 
+       y1 * y1 * y1 <= x && y2 = y1 * y1 * y1 && y3 = 3 * y1 + 3 * y1 * y1 + 1
+
+    goal S_A:
+        forall x: int.
+        x >= 0 -> (p_a x 0 0 1)
+
+    goal A_A:
+        forall x: int, y1: int, y2: int, y3: int.
+        x >= 0 && (p_a x y1 y2 y3) && y2 + y3 <= x -> (p_a x (y1 + 1) (y2 + y3) (y3 + 6 * y1 + 6))
+
+    goal A_H:
+        forall x: int, y1: int, y2: int, y3: int.
+        x >= 0 && (p_a x y1 y2 y3) && (y2 + y3 > x) -> y1 * y1 * y1 <= x && x < (y1 + 1) * (y1 + 1) * (y1 + 1)
+end
