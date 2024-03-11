@@ -1,0 +1,67 @@
+theory Task1_1
+
+	use import int.Int 
+	
+	predicate in_limits(a: int) = 
+		-2147483648 <= a && a <= 2147483647
+		
+	predicate sub_crashes (a : int) (b : int) = 
+		not in_limits(a) || not in_limits(b) || not in_limits(a-b)
+
+	predicate add_crashes (a : int) (b : int) = 
+		not in_limits(a) || not in_limits(b) || not in_limits(a+b)
+	
+	predicate psi (x1 : int) (x2 : int) (x3 : int) (z1 : int) =
+	  (z1 = x1 + x2 - x3)
+	
+	predicate phi1 (x1 : int) (x2 : int) (x3 : int) = 
+		in_limits(x1) && in_limits(x2) && in_limits(x3) && in_limits(x1 - x3) && in_limits(x1 - x3 + x2)
+		
+	predicate phi2 (x1 : int) (x2 : int) (x3 : int) = 
+		in_limits(x1) && in_limits(x2) && in_limits(x3) && in_limits(x1 - x3 + x2)
+		
+	function mp1(x1 : int) (x2 : int) (x3 : int) : int =
+	  let y1 = x1 - x3 in
+    let y1 = y1 + x2 in
+    let z1 = y1 in
+    z1
+    
+  predicate mp1_not_omega (x1 : int) (x2 : int) (x3 : int) = 
+		not sub_crashes x1 x3 && not add_crashes (x1 - x3) x2 
+                        
+  goal P1T1_total:
+    forall x1: int, x2: int, x3: int.
+    (phi1 x1 x2 x3) -> (mp1_not_omega x1 x2 x3) && (psi x1 x2 x3 (mp1 x1 x2 x3))
+    
+  goal P1T1_part:
+    forall x1: int, x2: int, x3: int.
+    (phi1 x1 x2 x3) &&  (mp1_not_omega x1 x2 x3)  -> (psi x1 x2 x3 (mp1 x1 x2 x3))
+    
+  goal P1T2_total:
+    forall x1: int, x2: int, x3: int.
+    (phi2 x1 x2 x3) -> (mp1_not_omega x1 x2 x3) && (psi x1 x2 x3 (mp1 x1 x2 x3))
+    
+  goal P1T2_part:
+    forall x1: int, x2: int, x3: int.
+    (phi2 x1 x2 x3) &&  (mp1_not_omega x1 x2 x3)  -> (psi x1 x2 x3 (mp1 x1 x2 x3))
+    
+  function mp2(x1 : int) (x2 : int) (x3 : int) : int = 1
+											                                          
+  predicate mp2_not_omega (x1 : int) (x2 : int) (x3 : int) = true
+                        
+  goal P2T1_total:
+    forall x1: int, x2: int, x3: int.
+    (phi1 x1 x2 x3) -> (mp2_not_omega x1 x2 x3) && (psi x1 x2 x3 (mp2 x1 x2 x3))
+    
+  goal P2T1_part:
+    forall x1: int, x2: int, x3: int.
+    (phi1 x1 x2 x3) &&  (mp2_not_omega x1 x2 x3)  -> (psi x1 x2 x3 (mp2 x1 x2 x3))
+    
+  goal P2T2_total:
+    forall x1: int, x2: int, x3: int.
+    (phi2 x1 x2 x3) -> (mp2_not_omega x1 x2 x3) && (psi x1 x2 x3 (mp2 x1 x2 x3))
+    
+  goal P2T2_part:
+    forall x1: int, x2: int, x3: int.
+    (phi2 x1 x2 x3) &&  (mp2_not_omega x1 x2 x3)  -> (psi x1 x2 x3 (mp2 x1 x2 x3))
+end
